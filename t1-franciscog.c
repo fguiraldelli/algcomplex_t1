@@ -10,13 +10,13 @@
 
 #include <stdio.h>
 
-#define MAX 10000
+#define MAX 1000000
 
 int main() {
 
 	int quantidade_numeros_da_sequencia;
 	int sequencias_dadas[MAX];
-	long long int produto_da_sequencia;
+	long long int soma_da_sequencia;
 	long long int maior_numero_ida;
 	long long int maior_numero_volta;
 	int i;
@@ -25,9 +25,10 @@ int main() {
 	while (quantidade_numeros_da_sequencia) {
 
 		/*Inicialização de variáveis*/
-		produto_da_sequencia = 1;
-		maior_numero_ida = 1;
-		maior_numero_volta = 1;
+		soma_da_sequencia = 0;
+
+		maior_numero_ida = 0;
+		maior_numero_volta = 0;
 
 		/*Lê da entrada padrão a sequência*/
 		scanf("%d", &quantidade_numeros_da_sequencia);
@@ -36,26 +37,27 @@ int main() {
 		for (i = 0; i < quantidade_numeros_da_sequencia; i++)
 			scanf("%d", &sequencias_dadas[i]);
 
-		/*Faz o produto dos elementos do vetor da esquerda para a direita (ida)*/
+
+		/*Faz a soma dos elementos do vetor da esquerda para a direita (ida)*/
 		for (i = 0; i < quantidade_numeros_da_sequencia; i++) {
-			produto_da_sequencia *= sequencias_dadas[i];
-			if (produto_da_sequencia == 0)
-				produto_da_sequencia = 1;
-			if (produto_da_sequencia > maior_numero_ida)
-				maior_numero_ida = produto_da_sequencia;
+			soma_da_sequencia += sequencias_dadas[i];
+			if (soma_da_sequencia > maior_numero_ida)
+				maior_numero_ida = soma_da_sequencia;
+			else if(soma_da_sequencia <= 0)
+				soma_da_sequencia = 0;
 		}
 
-		produto_da_sequencia = 1;
+		soma_da_sequencia = 0;
 
-		/*Faz o produto dos elementos do vetor da direita para a esquerda (volta)*/
+		/*Faz a soma dos elementos do vetor da direita para a esquerda (volta)*/
 		for (i = quantidade_numeros_da_sequencia - 1; i >= 0; i--) {
-			produto_da_sequencia *= sequencias_dadas[i];
-			if (produto_da_sequencia == 0)
-				produto_da_sequencia = 1;
-			if (produto_da_sequencia > maior_numero_volta)
-				maior_numero_volta = produto_da_sequencia;
+			soma_da_sequencia += sequencias_dadas[i];
+			if (soma_da_sequencia > maior_numero_volta)
+				maior_numero_volta = soma_da_sequencia;
+			else if(soma_da_sequencia <= 0)
+				soma_da_sequencia = 0;
 		}
-		/*Faz a comparação entre o produto da ida e da volta e imprime o maior produto*/
+		/*Faz a comparação entre a soma da ida e da volta e imprime a maior soma*/
 		if (quantidade_numeros_da_sequencia != 0) {
 			if (maior_numero_ida >= maior_numero_volta)
 				printf("%lld\n", maior_numero_ida);
